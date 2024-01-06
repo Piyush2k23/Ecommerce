@@ -1,18 +1,13 @@
 import asyncHandler from "../middlewares/catchAsyncErrors.js";
 import User from "../models/userModel.js";
 import ErrorHandler from "../utils/errorHandler.js";
-import generateToken from "../utils/generateToken.js";
-import jwt from "jsonwebtoken";
+import sendToken from "../utils/jwtToken.js";
 
 // Register User => /api/v1/register
-export const register = asyncHandler( async (req, res) => {
+export const register = asyncHandler( async (req, res, next) => {
 
     const { firstName, lastName, email, password } = req.body;
 
-    if(firstName === " " || lastName === " " || email === " " || password === " "){
-      return next(new ErrorHandler('Please enter all the felids'), 400);
-    }
- 
     const user = await User.findOne({ email });
 
     if(user){
@@ -26,15 +21,13 @@ export const register = asyncHandler( async (req, res) => {
             password,
     });
 
+
     await newUser.save();
 
-    generateToken(res, newUser._id);
-
-    res.status(200).json({
-      success: true,
-      message: 'User created successfully',
-      
-    });
+    
+    sendToken(user, 200, res);
+   
+  
 
 
 
@@ -65,7 +58,7 @@ export const register = asyncHandler( async (req, res) => {
 
 
 // Login User => /api/v1/login
-export const login = asyncHandler( async (req, res) => {
+export const login = asyncHandler( async (req, res, next) => {
 
    const { email, password } = req.body;
 
@@ -86,13 +79,7 @@ export const login = asyncHandler( async (req, res) => {
        
     } 
 
-    const token = jwt.verify(user._id,process.env.JWT_SECRET);
-
-    res.status(200).json({
-      success: true,
-      message: 'Login Successful',
-      token
-    });
+      sendToken(user, 200, res);
 
     
 

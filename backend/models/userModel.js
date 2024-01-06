@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
-// import validator from 'validator';
+import validator from 'validator';
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import crypto from "crypto";
+
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -18,13 +20,23 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter your email address'],
         unique: true,
-        // validate: [validator.isEmail, 'Please enter a valid email address']
+        validate: [validator.isEmail, 'Please enter a valid email address']
     },
     password: {
         type: String,
         required: [true, 'Please enter your password'],
         minlength: [6, 'Your password must be at least 6 characters'],
         select: false
+    },
+    avatar: {
+          public_id: {
+               type: String,
+            // required: true
+          },
+          url: {
+             type: String,
+            // required: true
+          }
     },
     role: {
         type: String,
@@ -39,16 +51,21 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function ( next ){
-    if(!this.isModified('password')) return next();
+    if(!this.isModified('password')) next();
 
      this.password = await bcrypt.hash(this.password, 10);
-     next();
 });
 
 userSchema.methods.matchPassword = async function (enterPassword){
      return await bcrypt.compare(enterPassword, this.password);
 };
 
+// JWT token
+userSchema.methods.getJwtToken = function (){
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_TIME
+    })
+}
 
 // Generate password reset token
 userSchema.methods.getResetPasswordToken = function (){

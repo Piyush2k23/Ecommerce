@@ -69,7 +69,7 @@ const productSchema = mongoose.Schema({
     {
       user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User'
+        ref: "User",
       },
       name: {
         type: String,
@@ -90,12 +90,12 @@ const productSchema = mongoose.Schema({
 
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
 
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

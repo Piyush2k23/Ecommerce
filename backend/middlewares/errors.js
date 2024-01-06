@@ -1,5 +1,6 @@
 
 const errors =  (err, req, res, next) => {
+
     err.statusCode = err.statusCode || 500; 
     
     if(process.env.NODE_ENV = 'DEVELOPMENT') {
@@ -17,7 +18,7 @@ const errors =  (err, req, res, next) => {
         error.message = err.message
 
         res.status(err.statusCode).json({
-            message: false,
+            success: false,
             message: error.message || 'Internal Server Error'
         })
     }
