@@ -5,8 +5,8 @@ import Register from "./pages/Register";
 // import ProductPage from "./pages/ProductPage";
 // import Cart from "./pages/Cart";
 import Home from "./pages/Home";
-// import { Provider } from "react-redux";
-// import store from "./app/store";
+import { Provider } from "react-redux";
+import store from "./app/store";
 // import ShoppingInformation from "./pages/ShoppingInformation";
 // import AboutUs from "./pages/AboutUs";
 // import ContactUs from "./pages/ContactUs";
@@ -16,7 +16,7 @@ function App() {
  
   return (
     <>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
     <Navbar/>
     <Routes>
          <Route path="/" element={<Home />} />
@@ -33,7 +33,7 @@ function App() {
            {/* <Route path="contact" element={<Contact />} />
            <Route path="*" element={<NoPage />} />   */}
     </Routes>
-    {/* </Provider> */}
+    </Provider>
     </>
   )
 }
