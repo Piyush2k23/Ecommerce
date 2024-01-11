@@ -38,7 +38,9 @@ const Product: React.FC<ProductProps> = ({ item }) => {
     { 
       setTruncatedText(item.title.substring(0, 40) + '...')
     };
-   },[truncatedText])
+   },[truncatedText]);
+
+   
 
 
     
@@ -54,7 +56,7 @@ const Product: React.FC<ProductProps> = ({ item }) => {
           {isHovering && (
             <div className="text-4xl absolute top-[35%] left-[50%] translate-x-[-50%] translate-y-[-50%]  gap-3 flex transition ease-in">
               <FaRegHeart className="bg-white rounded-sm p-1 cursor-pointer hover:bg-slate-400" />
-              <IoSearch className="bg-white rounded-sm text-black p-1 cursor-pointer hover:bg-slate-400" />
+              <Link to={`product/${item.id}`}><IoSearch className="bg-white rounded-sm text-black p-1 cursor-pointer hover:bg-slate-400" / ></Link>
               <MdOutlineShoppingCart
                 className="bg-white rounded-sm p-1 cursor-pointer hover:bg-slate-400"
                 onClick={() => handleAddToCart(item)}

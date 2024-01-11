@@ -10,6 +10,7 @@ import store from "./app/store";
 import ShoppingInformation from "./pages/ShoppingInformation";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
           <Route path="shopping-information" element={<ShoppingInformation />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="contact" element={<ContactUs />} />
+          <Route path="product/:id" element={<ProductDetailPage />} />
+
 
            {/* <Route path="contact" element={<Contact />} />
            <Route path="*" element={<NoPage />} />   */}
